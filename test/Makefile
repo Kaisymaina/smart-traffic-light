@@ -30,6 +30,7 @@ VERILOG_SOURCES += $(PWD)/gate_level_netlist.v
 endif
 
 # Allow sharing configuration between design and testbench via `include`:
+COMPILE_ARGS += -DSIM
 COMPILE_ARGS 		+= -I$(SRC_DIR)
 
 # Include the testbench sources:
