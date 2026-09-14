@@ -25,7 +25,7 @@ pinout:
   # Inputs
   ui[0]: "Pedestrian button"
   ui[1]: "Emergency toggle button"
-  ui[2]: ""
+  ui[2]: "Fast test mode"
   ui[3]: ""
   ui[4]: ""
   ui[5]: ""

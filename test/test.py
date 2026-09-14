@@ -26,7 +26,7 @@ async def test_traffic_light(dut):
     cocotb.start_soon(clock.start())
 
     dut.ena.value = 1
-    dut.ui_in.value = 0
+    dut.ui_in.value = 0b00000100
     dut.uio_in.value = 0
     dut.rst_n.value = 0
 
@@ -62,7 +62,7 @@ async def test_pedestrian(dut):
     cocotb.start_soon(clock.start())
 
     dut.ena.value = 1
-    dut.ui_in.value = 0
+    dut.ui_in.value = 0b00000100
     dut.uio_in.value = 0
     dut.rst_n.value = 0
 
@@ -73,9 +73,9 @@ async def test_pedestrian(dut):
     dut._log.info("GREEN: PASS")
 
     # Press pedestrian button
-    dut.ui_in.value = 0b00000001
+    dut.ui_in.value = 0b00000101
     await ClockCycles(dut.clk, 1)
-    dut.ui_in.value = 0
+    dut.ui_in.value = 0b00000100
 
     dut._log.info("Pedestrian request registered!")
 
@@ -103,7 +103,7 @@ async def test_buzzer(dut):
     cocotb.start_soon(clock.start())
 
     dut.ena.value = 1
-    dut.ui_in.value = 0
+    dut.ui_in.value = 0b00000100
     dut.uio_in.value = 0
     dut.rst_n.value = 0
 
@@ -113,9 +113,10 @@ async def test_buzzer(dut):
     await wait_for_output(dut, 0b001100)
 
     # Request crossing
-    dut.ui_in.value = 0b00000001
+    # Request crossing
+    dut.ui_in.value = 0b00000101
     await ClockCycles(dut.clk, 1)
-    dut.ui_in.value = 0
+    dut.ui_in.value = 0b00000100
 
     await wait_for_output(dut, 0b010001)
 
@@ -158,7 +159,7 @@ async def test_emergency_toggle(dut):
     cocotb.start_soon(clock.start())
 
     dut.ena.value = 1
-    dut.ui_in.value = 0
+    dut.ui_in.value = 0b00000100
     dut.uio_in.value = 0
     dut.rst_n.value = 0
 
@@ -169,7 +170,7 @@ async def test_emergency_toggle(dut):
     dut._log.info("GREEN: PASS")
 
     # Emergency ON
-    dut.ui_in.value = 0b00000010
+    dut.ui_in.value = 0b00000110
     await ClockCycles(dut.clk, 1)
     dut.ui_in.value = 0
 
@@ -186,7 +187,7 @@ async def test_emergency_toggle(dut):
     dut._log.info("EMERGENCY REMAINS ON: PASS")
 
     # Emergency OFF
-    dut.ui_in.value = 0b00000010
+    dut.ui_in.value = 0b00000100
     await ClockCycles(dut.clk, 1)
     dut.ui_in.value = 0
 

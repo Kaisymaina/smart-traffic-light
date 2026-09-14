@@ -33,17 +33,31 @@ module tt_um_smart_traffic (
     // TIMING
     // --------------------------------------------------
 
-    `ifdef SIM
-        localparam GREEN_TICKS  = 10;
-        localparam YELLOW_TICKS = 5;
-        localparam RED_TICKS    = 10;
-        localparam PED_TICKS    = 10;
-    `else
-        localparam GREEN_TICKS  = 500000000;
-        localparam YELLOW_TICKS = 150000000;
-        localparam RED_TICKS    = 500000000;
-        localparam PED_TICKS    = 500000000;
-    `endif
+    // ui_in[2] enables fast test mode for gate-level simulation
+    wire test_mode = ui_in[2];
+
+    localparam GREEN_TICKS_NORMAL  = 500000000;
+    localparam YELLOW_TICKS_NORMAL = 150000000;
+    localparam RED_TICKS_NORMAL    = 500000000;
+    localparam PED_TICKS_NORMAL    = 500000000;
+
+    localparam GREEN_TICKS_TEST  = 10;
+    localparam YELLOW_TICKS_TEST = 5;
+    localparam RED_TICKS_TEST    = 10;
+    localparam PED_TICKS_TEST    = 10;
+
+    wire [28:0] GREEN_TICKS =
+        test_mode ? GREEN_TICKS_TEST : GREEN_TICKS_NORMAL;
+
+    wire [28:0] YELLOW_TICKS =
+        test_mode ? YELLOW_TICKS_TEST : YELLOW_TICKS_NORMAL;
+
+    wire [28:0] RED_TICKS =
+        test_mode ? RED_TICKS_TEST : RED_TICKS_NORMAL;
+
+    wire [28:0] PED_TICKS =
+        test_mode ? PED_TICKS_TEST : PED_TICKS_NORMAL;
+
 
     reg [28:0] timer;
 
@@ -184,11 +198,11 @@ module tt_um_smart_traffic (
     // PEDESTRIAN BUZZER
     // --------------------------------------------------
 
-    `ifdef SIM
-        localparam BEEP_TICKS = 2;
-    `else
-        localparam BEEP_TICKS = 25000000;
-    `endif
+    localparam BEEP_TICKS_NORMAL = 25000000;
+    localparam BEEP_TICKS_TEST   = 2;
+
+    wire [28:0] BEEP_TICKS =
+        test_mode ? BEEP_TICKS_TEST : BEEP_TICKS_NORMAL;
 
     reg [28:0] beep_timer;
     reg beep_state;
