@@ -18,3 +18,16 @@ Explain how to use your project
 ## External hardware
 
 List external hardware used in your project (e.g. PMOD, LED display, etc), if any
+
+## How it works
+
+The smart traffic light controller uses a finite state machine to control the car and pedestrian traffic lights. The car lights follow a sequence of green, yellow, red, and yellow states. A pedestrian button request is remembered by the controller and is serviced when the car light reaches the red state. During pedestrian crossing, the pedestrian light turns green, the car light remains red, and the buzzer provides a repeating audible signal. An emergency button toggles emergency mode, which turns all lights red. Pressing the emergency button again returns the controller to the normal sequence starting from red.
+
+## How to test
+
+The design can be tested using the included Cocotb testbench. Fast test mode is enabled using `ui_in[2]` so that the traffic-light timing is shortened during simulation. The testbench checks the normal traffic-light sequence, pedestrian crossing, pedestrian buzzer operation, and emergency toggle behavior.
+
+Run the tests from the `test` directory using:
+
+```bash
+make
